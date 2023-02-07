@@ -1,118 +1,64 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, {useState} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
+  TouchableOpacity,
   Text,
-  useColorScheme,
   View,
+  Keyboard,
+  Modal,
+  SafeAreaView,
 } from 'react-native';
+import AddCard from './components/AddCard';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import Card, {CardProps} from './components/Card';
+import {styles} from './styles';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+export default function App() {
+  Keyboard.dismiss();
+  const [cards, setCards] = useState<CardProps[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const deleteCard = (index: number) => {
+    let copy = [...cards];
+    copy.splice(index, 1);
+    setCards(copy);
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <SafeAreaView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.title}>nemu</Text>
+        <View style={styles.icons}>
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            {/* TODO: Turn this into icon */}
+            <Text style={[styles.title, styles.icon]}>+</Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
+
+      {/* Add a new card */}
+      <Modal visible={modalVisible} animationType="slide">
+        <AddCard
+          setModalVisible={setModalVisible}
+          setCards={setCards}
+          cards={cards}
+        />
+      </Modal>
+
+      {/* Content */}
+      <View style={styles.items}>
+        {cards.map((c, i) => {
+          return (
+            <View key={i}>
+              <Card
+                name={c.name}
+                description={c.description}
+                delete={() => deleteCard(i)}
+              />
+            </View>
+          );
+        })}
+      </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
