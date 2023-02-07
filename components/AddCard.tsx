@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   Pressable,
 } from 'react-native';
+import nfcManager, {NfcEvents} from 'react-native-nfc-manager';
 import {styles} from '../styles';
 import {CardProps} from './Card';
 
@@ -17,9 +18,18 @@ type AddCardProps = {
   setCards: any;
   cards: CardProps[];
 };
+
 export default function AddCard(props: AddCardProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
+  // TODO: Implement this
+  const scanNfc = async () => {
+    nfcManager.setEventListener(NfcEvents.DiscoverTag, (tag: unknown) => {
+      console.warn('tag found', tag);
+    });
+    await nfcManager.registerTagEvent();
+  };
 
   const validInputs = (): boolean => {
     if (!name.trim()) {
