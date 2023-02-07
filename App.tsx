@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {TouchableOpacity, Text, View, Keyboard, Modal} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  Keyboard,
+  Modal,
+  SafeAreaView,
+} from 'react-native';
 import AddCard from './components/AddCard';
 
 import Card, {CardProps} from './components/Card';
@@ -17,7 +24,7 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.title}>nemu</Text>
@@ -48,6 +55,6 @@ export default function App() {
           );
         })}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

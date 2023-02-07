@@ -4,9 +4,10 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  Button,
   Keyboard,
   Alert,
+  SafeAreaView,
+  Pressable,
 } from 'react-native';
 import {styles} from '../styles';
 import {CardProps} from './Card';
@@ -24,9 +25,6 @@ export default function AddCard(props: AddCardProps) {
     if (!name.trim()) {
       Alert.alert('Please have a non empty name!');
       return false;
-    } else if (!description.trim()) {
-      Alert.alert('Please have a non empty description!');
-      return false;
     }
     return true;
   };
@@ -40,7 +38,7 @@ export default function AddCard(props: AddCardProps) {
   };
 
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>add card</Text>
         <View style={styles.icons}>
@@ -55,11 +53,13 @@ export default function AddCard(props: AddCardProps) {
         onChangeText={setName}
       />
       <TextInput
-        placeholder="enter description"
+        placeholder="enter description (optional)"
         style={styles.modalInput}
         onChangeText={setDescription}
       />
-      <Button title="add" onPress={submit} />
-    </View>
+      <Pressable onPress={submit} style={styles.modalButton}>
+        <Text style={styles.modalButtonText}>Add</Text>
+      </Pressable>
+    </SafeAreaView>
   );
 }

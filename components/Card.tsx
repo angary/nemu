@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {theme} from '../theme';
 
 export type CardProps = {
   name: string;
@@ -23,14 +24,12 @@ const Card = (props: CardProps) => {
 
 const styles = StyleSheet.create({
   card: {
-    borderWidth: 2,
-    borderColor: 'gray',
-    padding: 12,
+    padding: theme.spacing.m,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 12,
-    marginHorizontal: 12,
+    marginBottom: theme.spacing.s,
+    marginHorizontal: theme.spacing.s,
   },
   cardLeft: {
     flexDirection: 'row',
@@ -40,15 +39,19 @@ const styles = StyleSheet.create({
   },
   name: {
     fontWeight: 'bold',
+    fontSize: theme.fontSize.m,
+    color: theme.colors.foreground,
   },
   description: {
-    color: 'gray',
+    color: theme.colors.medium,
+    fontSize: theme.fontSize.s,
   },
   options: {
     width: 16,
     height: 16,
-    borderColor: 'aqua',
-    borderWidth: 2,
+    borderColor: theme.colors.medium,
+    borderWidth: 1,
+    marginRight: theme.spacing.s,
   },
 });
 

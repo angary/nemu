@@ -1,21 +1,20 @@
 import {StyleSheet} from 'react-native';
+import {theme} from './theme';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: theme.colors.background,
   },
   header: {
-    paddingTop: 40,
-    paddingBottom: 10,
-    paddingHorizontal: 20,
-    borderColor: 'silver',
-    borderBottomWidth: 1,
+    paddingVertical: theme.spacing.m,
+    paddingHorizontal: theme.spacing.l,
     flexDirection: 'row',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    alignContent: 'center',
+    fontSize: theme.fontSize.l,
+    fontVariant: ['small-caps'],
+    color: theme.colors.foreground,
   },
   icons: {
     flexDirection: 'row',
@@ -27,39 +26,25 @@ export const styles = StyleSheet.create({
   items: {
     paddingTop: 5,
   },
-  writeCardWrapper: {
-    position: 'absolute',
-    bottom: 60,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  input: {
-    padding: 12,
-    width: 250,
-    borderColor: 'aqua',
-    borderWidth: 2,
-    marginLeft: 30,
-  },
-  addWrapper: {
-    width: 46,
-    height: 46,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: 'aqua',
-    borderWidth: 2,
-    margin: 12,
-    marginRight: 30,
-  },
-  addText: {
-    fontWeight: 'bold',
-    fontSize: 24,
-  },
   modalInput: {
-    padding: 12,
+    paddingVertical: theme.spacing.m,
+    paddingHorizontal: theme.spacing.s,
+    marginHorizontal: theme.spacing.l,
+    borderBottomColor: theme.colors.medium,
     borderBottomWidth: 1,
-    borderColor: 'silver',
-    fontSize: 16,
+    fontSize: theme.fontSize.m,
+    color: theme.colors.foreground,
+  },
+  modalButton: {
+    width: 50,
+    margin: theme.spacing.l,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    alignContent: 'center',
+  },
+  modalButtonText: {
+    textAlign: 'center',
+    fontSize: theme.fontSize.m,
+    color: theme.colors.foreground,
   },
 });
