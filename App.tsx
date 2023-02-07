@@ -1,16 +1,28 @@
 import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, Text, View, Keyboard} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  View,
+  Keyboard,
+  Modal,
+  TextInput,
+  Button,
+} from 'react-native';
 
-import Card from './components/Card';
+import Card, {CardProps} from './components/Card';
 
 export default function App() {
   Keyboard.dismiss();
-  const [card, setCard]: [string | undefined, any] = useState();
-  const [cards, setCards] = useState([]);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [cards, setCards]: [CardProps[], any] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const handleAddCard = () => {
-    // setCards([...cards, card]);
-    // setCard(null);
+  const removeCard = (index: number) => {
+    let copy = [...cards];
+    copy.splice(index, 1);
+    setCards(copy);
   };
 
   return (
@@ -19,16 +31,57 @@ export default function App() {
       <View style={styles.header}>
         <Text style={styles.title}>nemu</Text>
         <View style={styles.icons}>
-          <TouchableOpacity onPress={() => handleAddCard()}>
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
             <Text style={[styles.title, styles.icon]}>+</Text>
           </TouchableOpacity>
         </View>
       </View>
 
+      {/* TODO: Move this into a header */}
+      {/* Add a new card */}
+      <Modal visible={modalVisible} animationType="slide">
+        <View style={styles.modal}>
+          {/* Add new card header */}
+          <View style={styles.header}>
+            <Text style={styles.title}>add card</Text>
+            <View style={styles.icons}>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <Text style={[styles.title, styles.icon]}>x</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* TODO: Prv */}
+          {/* Add new card form */}
+          <TextInput
+            placeholder="enter name"
+            style={styles.modalInput}
+            onChangeText={setName}
+          />
+          <TextInput
+            placeholder="enter description"
+            style={styles.modalInput}
+            onChangeText={setDescription}
+          />
+          <Button
+            title="add"
+            onPress={() => {
+              setCards([{name, description}, ...cards]);
+              setModalVisible(false);
+              Keyboard.dismiss();
+            }}
+          />
+        </View>
+      </Modal>
+
       {/* Content */}
       <View style={styles.items}>
-        {cards.map((item, index) => {
-          return <Card key={index} name={item} />;
+        {cards.map((c, i) => {
+          return (
+            <TouchableOpacity onPress={() => removeCard(i)}>
+              <Card key={i} name={c.name} description={c.description} />
+            </TouchableOpacity>
+          );
         })}
       </View>
     </View>
@@ -46,7 +99,6 @@ const styles = StyleSheet.create({
     borderColor: 'silver',
     borderBottomWidth: 1,
     flexDirection: 'row',
-    // backgroundColor: 'aqua',
   },
   title: {
     fontSize: 24,
@@ -90,5 +142,14 @@ const styles = StyleSheet.create({
   addText: {
     fontWeight: 'bold',
     fontSize: 24,
+  },
+  modal: {
+    backgroundColor: 'white',
+  },
+  modalInput: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderColor: 'silver',
+    fontSize: 16,
   },
 });

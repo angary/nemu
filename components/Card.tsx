@@ -1,22 +1,22 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-type CardProps = {
+export type CardProps = {
   name: string;
-  description?: string;
+  description: string;
 };
 
 const Card = (props: CardProps) => {
+  console.log(props);
   return (
     <View style={styles.card}>
       <View style={styles.cardLeft}>
-        <View style={styles.colour} />
         <View>
           <Text style={styles.name}>{props.name}</Text>
           <Text style={styles.description}>{props.description}</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.options}>options</TouchableOpacity>
+      <TouchableOpacity style={styles.options} />
     </View>
   );
 };
@@ -24,7 +24,7 @@ const Card = (props: CardProps) => {
 const styles = StyleSheet.create({
   card: {
     borderWidth: 2,
-    borderColor: 'aqua',
+    borderColor: 'gray',
     padding: 12,
     flexDirection: 'row',
     alignItems: 'center',
@@ -38,12 +38,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     maxWidth: '80%',
   },
-  colour: {
-    width: 12,
-    height: 36,
-    backgroundColor: 'aqua',
-    marginRight: 10,
-  },
   name: {
     fontWeight: 'bold',
   },
@@ -53,7 +47,6 @@ const styles = StyleSheet.create({
   options: {
     width: 16,
     height: 16,
-    borderRadius: 6,
     borderColor: 'aqua',
     borderWidth: 2,
   },
