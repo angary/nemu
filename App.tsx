@@ -1,118 +1,94 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, {useState} from 'react';
+import {StyleSheet, TouchableOpacity, Text, View, Keyboard} from 'react-native';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import Card from './components/Card';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+export default function App() {
+  Keyboard.dismiss();
+  const [card, setCard]: [string | undefined, any] = useState();
+  const [cards, setCards] = useState([]);
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+  const handleAddCard = () => {
+    // setCards([...cards, card]);
+    // setCard(null);
+  };
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.title}>nemu</Text>
+        <View style={styles.icons}>
+          <TouchableOpacity onPress={() => handleAddCard()}>
+            <Text style={[styles.title, styles.icon]}>+</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Content */}
+      <View style={styles.items}>
+        {cards.map((item, index) => {
+          return <Card key={index} name={item} />;
+        })}
+      </View>
     </View>
   );
 }
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
   },
-  sectionTitle: {
+  header: {
+    paddingTop: 40,
+    paddingBottom: 10,
+    paddingHorizontal: 20,
+    borderColor: 'silver',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    // backgroundColor: 'aqua',
+  },
+  title: {
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: 'bold',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  icons: {
+    flexDirection: 'row',
+    marginLeft: 'auto',
   },
-  highlight: {
-    fontWeight: '700',
+  icon: {
+    paddingHorizontal: 6,
+  },
+  items: {
+    paddingTop: 5,
+  },
+  writeCardWrapper: {
+    position: 'absolute',
+    bottom: 60,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  input: {
+    padding: 12,
+    width: 250,
+    borderColor: 'aqua',
+    borderWidth: 2,
+    marginLeft: 30,
+  },
+  addWrapper: {
+    width: 46,
+    height: 46,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'aqua',
+    borderWidth: 2,
+    margin: 12,
+    marginRight: 30,
+  },
+  addText: {
+    fontWeight: 'bold',
+    fontSize: 24,
   },
 });
-
-export default App;
