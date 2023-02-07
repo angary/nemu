@@ -17,7 +17,7 @@ export default function App() {
   const [cards, setCards] = useState<CardProps[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const removeCard = (index: number) => {
+  const deleteCard = (index: number) => {
     let copy = [...cards];
     copy.splice(index, 1);
     setCards(copy);
@@ -49,9 +49,13 @@ export default function App() {
       <View style={styles.items}>
         {cards.map((c, i) => {
           return (
-            <TouchableOpacity onPress={() => removeCard(i)}>
-              <Card key={i} name={c.name} description={c.description} />
-            </TouchableOpacity>
+            <View key={i}>
+              <Card
+                name={c.name}
+                description={c.description}
+                delete={() => deleteCard(i)}
+              />
+            </View>
           );
         })}
       </View>

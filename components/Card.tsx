@@ -5,6 +5,7 @@ import {theme} from '../theme';
 export type CardProps = {
   name: string;
   description: string;
+  delete?: () => void;
 };
 
 const Card = (props: CardProps) => {
@@ -17,7 +18,7 @@ const Card = (props: CardProps) => {
           <Text style={styles.description}>{props.description}</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.options} />
+      <TouchableOpacity style={styles.options} onPress={props.delete} />
     </View>
   );
 };

@@ -51,6 +51,7 @@ export default function AddCard(props: AddCardProps) {
         placeholder="enter name"
         style={styles.modalInput}
         onChangeText={setName}
+        autoFocus={true}
       />
       <TextInput
         placeholder="enter description (optional)"
