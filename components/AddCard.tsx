@@ -17,6 +17,7 @@ type AddCardProps = {
   setCards: any;
   cards: CardProps[];
 };
+
 export default function AddCard(props: AddCardProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
