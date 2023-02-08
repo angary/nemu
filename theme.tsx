@@ -5,7 +5,7 @@ const palette = {
   black: '#222426',
   white: '#F0F2F3',
   grey: '#36454f',
-  silver: '#556870',
+  silver: '#647072',
 };
 
 export const theme = {
@@ -29,6 +29,7 @@ export const theme = {
     s: 14,
     m: 18,
     l: 30,
+    xl: 40,
   },
   textVariants: {
     header: {

@@ -13,6 +13,8 @@ import nfcManager, {NfcEvents} from 'react-native-nfc-manager';
 import {styles} from '../styles';
 import {CardProps} from './Card';
 
+import Icon from 'react-native-vector-icons/Feather';
+
 type AddCardProps = {
   setModalVisible: (_: boolean) => void;
   setCards: (_: CardProps[]) => unknown;
@@ -57,7 +59,7 @@ export default function AddCard(props: AddCardProps) {
         <Text style={styles.title}>add card</Text>
         <View style={styles.icons}>
           <TouchableOpacity onPress={() => props.setModalVisible(false)}>
-            <Text style={[styles.title, styles.icon]}>x</Text>
+            <Icon name="x-square" style={[styles.title, styles.icon]} />
           </TouchableOpacity>
         </View>
       </View>
