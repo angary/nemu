@@ -2,9 +2,11 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {theme} from '../theme';
 
+// Note that the following card props have to be serialisable as a JSON string
 export type CardProps = {
   name: string;
   description: string;
+  date: string;
   delete?: () => void;
 };
 
@@ -14,7 +16,14 @@ const Card = (props: CardProps) => {
     <View style={styles.card}>
       <View style={styles.cardLeft}>
         <View>
-          <Text style={styles.name}>{props.name}</Text>
+          <View style={styles.header}>
+            <Text style={styles.name}>{props.name}</Text>
+            <Text style={styles.date}>
+              {' '}
+              {'\u2022'}
+              {` ${props.date}`}
+            </Text>
+          </View>
           <Text style={styles.description}>{props.description}</Text>
         </View>
       </View>
@@ -38,14 +47,23 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     maxWidth: '80%',
   },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   name: {
     fontWeight: 'bold',
     fontSize: theme.fontSize.m,
     color: theme.colors.foreground,
   },
-  description: {
+  date: {
     color: theme.colors.medium,
     fontSize: theme.fontSize.s,
+  },
+  description: {
+    color: theme.colors.bright,
+    fontSize: theme.fontSize.m,
   },
   options: {
     width: 16,

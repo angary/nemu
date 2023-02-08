@@ -15,7 +15,7 @@ import {CardProps} from './Card';
 
 type AddCardProps = {
   setModalVisible: (_: boolean) => void;
-  setCards: any;
+  setCards: (_: CardProps[]) => unknown;
   cards: CardProps[];
 };
 
@@ -23,7 +23,8 @@ export default function AddCard(props: AddCardProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-  // TODO: Implement this
+  // TODO: Implement NFC scanning
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const scanNfc = async () => {
     nfcManager.setEventListener(NfcEvents.DiscoverTag, (tag: unknown) => {
       console.warn('tag found', tag);
@@ -41,7 +42,10 @@ export default function AddCard(props: AddCardProps) {
 
   const submit = () => {
     if (validInputs()) {
-      props.setCards([{name, description}, ...props.cards]);
+      props.setCards([
+        {name, description, date: new Date().toLocaleDateString('en-GB')},
+        ...props.cards,
+      ]);
       props.setModalVisible(false);
       Keyboard.dismiss();
     }

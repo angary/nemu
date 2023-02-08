@@ -6,7 +6,6 @@ import {
   Keyboard,
   Modal,
   SafeAreaView,
-  Alert,
   ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -24,7 +23,6 @@ export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const setCardsStored = async (newCards: CardProps[]) => {
-    console.log(`setCardsStored, ${JSON.stringify(newCards, null, 4)}`);
     setCards(newCards);
     await AsyncStorage.setItem('cards', JSON.stringify(newCards));
   };
@@ -34,8 +32,8 @@ export default function App() {
     (async () => setHasNfc(await nfcManager.isSupported()))();
     (async () => {
       try {
+        // await AsyncStorage.setItem('cards', JSON.stringify([]));
         const value = await AsyncStorage.getItem('cards');
-        console.log(`Getting stored cards: ${JSON.stringify(value, null, 4)}`);
         if (value !== null) {
           setCardsStored(JSON.parse(value));
         }
@@ -81,6 +79,7 @@ export default function App() {
               <Card
                 name={c.name}
                 description={c.description}
+                date={c.date}
                 delete={() => deleteCard(i)}
               />
             </View>
@@ -91,7 +90,7 @@ export default function App() {
         <Text style={styles.footerText}>
           {hasNfc
             ? ''
-            : 'Your device does not support NFC - many app features will be unavailable'}
+            : 'Your device does not support NFC. Many app features will be unavailable'}
         </Text>
       </View>
     </SafeAreaView>
