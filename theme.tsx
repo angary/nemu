@@ -4,7 +4,8 @@ const palette = {
   red: '#CD0E61',
   black: '#222426',
   white: '#F0F2F3',
-  grey: '#7A8999',
+  grey: '#36454f',
+  silver: '#556870',
 };
 
 export const theme = {
@@ -12,6 +13,7 @@ export const theme = {
     background: palette.black,
     foreground: palette.white,
     medium: palette.grey,
+    bright: palette.silver,
     primary: palette.purple,
     success: palette.green,
     danger: palette.red,
