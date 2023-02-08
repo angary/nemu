@@ -47,4 +47,12 @@ export const styles = StyleSheet.create({
     fontSize: theme.fontSize.m,
     color: theme.colors.foreground,
   },
+  footer: {
+    paddingHorizontal: theme.spacing.l,
+  },
+  footerText: {
+    fontSize: theme.fontSize.s,
+    color: theme.colors.medium,
+    textAlign: 'center',
+  },
 });

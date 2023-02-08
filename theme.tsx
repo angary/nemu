@@ -4,7 +4,7 @@ const palette = {
   red: '#CD0E61',
   black: '#222426',
   white: '#F0F2F3',
-  grey: '#7A8999',
+  grey: '#36454f',
 };
 
 export const theme = {

@@ -7,7 +7,10 @@ import {
   Modal,
   SafeAreaView,
   Alert,
+  ScrollView,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import nfcManager from 'react-native-nfc-manager';
 import AddCard from './components/AddCard';
 
@@ -20,23 +23,33 @@ export default function App() {
   const [cards, setCards] = useState<CardProps[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
 
+  const setCardsStored = async (newCards: CardProps[]) => {
+    console.log(`setCardsStored, ${JSON.stringify(newCards, null, 4)}`);
+    setCards(newCards);
+    await AsyncStorage.setItem('cards', JSON.stringify(newCards));
+  };
+
   // Check for NFC capabilities
   useEffect(() => {
     (async () => setHasNfc(await nfcManager.isSupported()))();
+    (async () => {
+      try {
+        const value = await AsyncStorage.getItem('cards');
+        console.log(`Getting stored cards: ${JSON.stringify(value, null, 4)}`);
+        if (value !== null) {
+          setCardsStored(JSON.parse(value));
+        }
+      } catch (error) {
+        console.warn(error);
+      }
+    })();
   }, []);
 
   const deleteCard = (index: number) => {
     let copy = [...cards];
     copy.splice(index, 1);
-    setCards(copy);
+    setCardsStored(copy);
   };
-
-  if (!hasNfc) {
-    Alert.alert(
-      'Your device does not support NFC',
-      'Many feature of this app will be unavailable',
-    );
-  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,13 +68,13 @@ export default function App() {
       <Modal visible={modalVisible} animationType="slide">
         <AddCard
           setModalVisible={setModalVisible}
-          setCards={setCards}
+          setCards={setCardsStored}
           cards={cards}
         />
       </Modal>
 
       {/* Content */}
-      <View style={styles.items}>
+      <ScrollView style={styles.items}>
         {cards.map((c, i) => {
           return (
             <View key={i}>
@@ -73,6 +86,13 @@ export default function App() {
             </View>
           );
         })}
+      </ScrollView>
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          {hasNfc
+            ? ''
+            : 'Your device does not support NFC - many app features will be unavailable'}
+        </Text>
       </View>
     </SafeAreaView>
   );
