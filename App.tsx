@@ -16,6 +16,8 @@ import AddCard from './components/AddCard';
 import Card, {CardProps} from './components/Card';
 import {styles} from './styles';
 
+import Icon from 'react-native-vector-icons/Feather';
+
 export default function App() {
   Keyboard.dismiss();
   const [hasNfc, setHasNfc] = useState(true);
@@ -57,11 +59,11 @@ export default function App() {
         <View style={styles.icons}>
           <TouchableOpacity onPress={() => setModalVisible(true)}>
             {/* TODO: Turn this into icon */}
-            <Text style={[styles.title, styles.icon]}>+</Text>
+            <Icon name="plus-square" style={[styles.title, styles.icon]} />
+            {/* <Text style={[styles.title, styles.icon]}>+</Text> */}
           </TouchableOpacity>
         </View>
       </View>
-
       {/* Add a new card */}
       <Modal visible={modalVisible} animationType="slide">
         <AddCard
@@ -70,7 +72,6 @@ export default function App() {
           cards={cards}
         />
       </Modal>
-
       {/* Content */}
       <ScrollView style={styles.items}>
         {cards.map((c, i) => {
