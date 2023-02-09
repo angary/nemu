@@ -1,6 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {theme} from '../theme';
+
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 // Note that the following card props have to be serialisable as a JSON string
 export type CardProps = {
@@ -14,8 +17,9 @@ const Card = (props: CardProps) => {
   console.log(props);
   return (
     <View style={styles.card}>
-      <View style={styles.cardLeft}>
-        <View>
+      <MaterialIcons style={styles.icon} name="account-circle" />
+      <View style={styles.cardContent}>
+        <View style={styles.cardText}>
           <View style={styles.header}>
             <Text style={styles.name}>{props.name}</Text>
             <Text style={styles.date}>
@@ -26,8 +30,10 @@ const Card = (props: CardProps) => {
           </View>
           <Text style={styles.description}>{props.description}</Text>
         </View>
+        <TouchableOpacity onPress={props.delete}>
+          <SimpleLineIcons style={styles.options} name="options-vertical" />
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.options} onPress={props.delete} />
     </View>
   );
 };
@@ -37,15 +43,23 @@ const styles = StyleSheet.create({
     padding: theme.spacing.m,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     marginBottom: theme.spacing.s,
     marginHorizontal: theme.spacing.s,
   },
-  cardLeft: {
+  icon: {
+    fontSize: theme.fontSize.xl,
+    paddingRight: theme.spacing.m,
+    color: theme.colors.bright,
+  },
+  cardContent: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
-    maxWidth: '80%',
+    maxWidth: '100%',
+  },
+  cardText: {
+    flex: 1,
   },
   header: {
     display: 'flex',
@@ -66,11 +80,9 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSize.m,
   },
   options: {
-    width: 16,
-    height: 16,
-    borderColor: theme.colors.medium,
-    borderWidth: 1,
-    marginRight: theme.spacing.s,
+    fontSize: theme.fontSize.m,
+    color: theme.colors.bright,
+    paddingRight: theme.spacing.s,
   },
 });
 
