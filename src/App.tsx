@@ -1,14 +1,14 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {
-  TouchableOpacity,
-  Text,
-  View,
   Keyboard,
   Modal,
   SafeAreaView,
   ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import nfcManager from 'react-native-nfc-manager';
 import AddCard from './components/AddCard';

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Keyboard,
   Alert,
-  SafeAreaView,
+  Keyboard,
   Pressable,
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import nfcManager, {NfcEvents} from 'react-native-nfc-manager';
 import {styles} from '../styles';
