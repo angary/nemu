@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import nfcManager, {NfcEvents} from 'react-native-nfc-manager';
 import {styles} from '../styles';
-import {CardProps} from './Card';
+import {CardProps} from './card/Card';
 
 import Icon from 'react-native-vector-icons/Feather';
 

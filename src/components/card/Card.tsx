@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {theme} from '../theme';
+import {StyleSheet, Text, View} from 'react-native';
+import {theme} from '../../theme';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import CardOptions from './CardOptions';
 
 // Note that the following card props have to be serialisable as a JSON string
 export type CardProps = {
@@ -13,30 +13,26 @@ export type CardProps = {
   delete?: () => void;
 };
 
-const Card = (props: CardProps) => {
-  console.log(props);
+export default function Card(props: CardProps) {
   return (
     <View style={styles.card}>
       <MaterialIcons style={styles.icon} name="account-circle" />
+      {/* Text and Options */}
       <View style={styles.cardContent}>
+        {/* Text */}
         <View style={styles.cardText}>
           <View style={styles.header}>
             <Text style={styles.name}>{props.name}</Text>
-            <Text style={styles.date}>
-              {' '}
-              {'\u2022'}
-              {` ${props.date}`}
-            </Text>
+            <Text style={styles.date}>{` \u2022 ${props.date}`}</Text>
           </View>
           <Text style={styles.description}>{props.description}</Text>
         </View>
-        <TouchableOpacity onPress={props.delete}>
-          <SimpleLineIcons style={styles.options} name="options-vertical" />
-        </TouchableOpacity>
+        {/* Options Button */}
+        <CardOptions delete={props.delete} />
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   card: {
@@ -47,7 +43,7 @@ const styles = StyleSheet.create({
     marginHorizontal: theme.spacing.s,
   },
   icon: {
-    fontSize: theme.fontSize.xl,
+    fontSize: theme.fontSize.xxl,
     paddingRight: theme.spacing.m,
     color: theme.colors.bright,
   },
@@ -79,11 +75,4 @@ const styles = StyleSheet.create({
     color: theme.colors.bright,
     fontSize: theme.fontSize.m,
   },
-  options: {
-    fontSize: theme.fontSize.m,
-    color: theme.colors.bright,
-    paddingRight: theme.spacing.s,
-  },
 });
-
-export default Card;
