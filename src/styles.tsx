@@ -50,6 +50,7 @@ export const styles = StyleSheet.create({
   },
   footer: {
     paddingHorizontal: theme.spacing.l,
+    paddingVertical: theme.spacing.s,
   },
   footerText: {
     fontSize: theme.fontSize.s,
