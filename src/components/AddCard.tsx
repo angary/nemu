@@ -11,9 +11,10 @@ import {
 } from 'react-native';
 import nfcManager, {NfcEvents} from 'react-native-nfc-manager';
 import {styles} from '../styles';
-import {CardProps} from './Card';
+import {CardProps} from './card/Card';
 
 import Icon from 'react-native-vector-icons/Feather';
+import moment from 'moment';
 
 type AddCardProps = {
   setModalVisible: (_: boolean) => void;
@@ -45,7 +46,7 @@ export default function AddCard(props: AddCardProps) {
   const submit = () => {
     if (validInputs()) {
       props.setCards([
-        {name, description, date: new Date().toLocaleDateString('en-GB')},
+        {name, description, date: moment().format('DD/MM/YY')},
         ...props.cards,
       ]);
       props.setModalVisible(false);

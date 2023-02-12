@@ -10,9 +10,10 @@ export const styles = StyleSheet.create({
     paddingVertical: theme.spacing.m,
     paddingHorizontal: theme.spacing.l,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
-    fontSize: theme.fontSize.l,
+    fontSize: theme.fontSize.xl,
     fontVariant: ['small-caps'],
     color: theme.colors.foreground,
   },
@@ -49,6 +50,7 @@ export const styles = StyleSheet.create({
   },
   footer: {
     paddingHorizontal: theme.spacing.l,
+    paddingVertical: theme.spacing.s,
   },
   footerText: {
     fontSize: theme.fontSize.s,
