@@ -1,20 +1,24 @@
 import React, {useState} from 'react';
 import {
   Alert,
+  Button,
   Keyboard,
+  Platform,
   Pressable,
   SafeAreaView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import nfcManager, {NfcEvents} from 'react-native-nfc-manager';
+import NfcManager, {NfcEvents, NfcTech} from 'react-native-nfc-manager';
 import {styles} from '../styles';
 import {CardProps} from './card/Card';
 
 import Icon from 'react-native-vector-icons/Feather';
 import moment from 'moment';
+import {theme} from '../theme';
 
 type AddCardProps = {
   setModalVisible: (_: boolean) => void;
@@ -27,12 +31,31 @@ export default function AddCard(props: AddCardProps) {
   const [description, setDescription] = useState('');
 
   // TODO: Implement NFC scanning
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const scanNfc = async () => {
-    nfcManager.setEventListener(NfcEvents.DiscoverTag, (tag: unknown) => {
-      console.warn('tag found', tag);
-    });
-    await nfcManager.registerTagEvent();
+    try {
+      const supported = await NfcManager.isSupported();
+      const nfcScanning = await NfcManager.isEnabled();
+      if (supported && nfcScanning) {
+        await NfcManager.start();
+        const [tech, cmd] =
+          Platform.OS === 'ios'
+            ? [NfcTech.MifareIOS, NfcManager.sendMifareCommandIOS]
+            : [NfcTech.NfcA, NfcManager.transceive];
+        let response: any = await NfcManager.requestTechnology(tech, {
+          alertMessage: 'Ready to scan',
+        });
+        response = await cmd([0x3a, 4, 4]);
+        const payLoadLength = parseInt(response?.toString().split(',')[1], 10);
+        const payLoadPages = Math.ceil(payLoadLength / 4);
+        const startPage = 5;
+        const endPage = startPage + payLoadPages - 1;
+        response = await cmd([0x3a, startPage, endPage]);
+      }
+    } catch (error) {
+      NfcManager.cancelTechnologyRequest();
+      console.log(error);
+      Alert.alert('Error scanning NFC', error.toString());
+    }
   };
 
   const validInputs = (): boolean => {
@@ -64,19 +87,26 @@ export default function AddCard(props: AddCardProps) {
           </TouchableOpacity>
         </View>
       </View>
+      <TouchableOpacity>
+        <Pressable onPress={scanNfc} style={styles.scanButton}>
+          <Text style={styles.scanButtonText}>scan nfc</Text>
+        </Pressable>
+      </TouchableOpacity>
       <TextInput
-        placeholder="enter name"
+        placeholder="name"
+        placeholderTextColor={theme.colors.medium}
         style={styles.modalInput}
         onChangeText={setName}
         autoFocus={true}
       />
       <TextInput
-        placeholder="enter description (optional)"
+        placeholder="description (optional)"
+        placeholderTextColor={theme.colors.medium}
         style={styles.modalInput}
         onChangeText={setDescription}
       />
       <Pressable onPress={submit} style={styles.modalButton}>
-        <Text style={styles.modalButtonText}>Add</Text>
+        <Text style={styles.modalButtonText}>add</Text>
       </Pressable>
     </SafeAreaView>
   );

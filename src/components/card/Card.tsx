@@ -10,7 +10,9 @@ export type CardProps = {
   name: string;
   description: string;
   date: string;
+  data?: string;
   delete?: () => void;
+  edit?: () => void;
 };
 
 export default function Card(props: CardProps) {

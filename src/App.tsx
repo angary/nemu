@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 
-import nfcManager from 'react-native-nfc-manager';
+import NfcManager from 'react-native-nfc-manager';
 import AddCard from './components/AddCard';
 
 import Card, {CardProps} from './components/card/Card';
@@ -32,10 +32,14 @@ export default function App() {
 
   // Check for NFC capabilities
   useEffect(() => {
-    (async () => {
-      setHasNfc(await nfcManager.isSupported());
+    const checkNfc = async () => {
+      setHasNfc(await NfcManager.isSupported());
+      if (hasNfc) {
+        await NfcManager.start();
+      }
+    };
+    const loadData = async () => {
       try {
-        // await AsyncStorage.setItem('cards', JSON.stringify([]));
         const value = await AsyncStorage.getItem('cards');
         if (value !== null) {
           setCardsStored(JSON.parse(value));
@@ -43,8 +47,10 @@ export default function App() {
       } catch (error) {
         console.warn(error);
       }
-    })();
-  }, []);
+    };
+    checkNfc();
+    loadData();
+  });
 
   const deleteCard = (index: number) => {
     let copy = [...cards];
@@ -57,7 +63,7 @@ export default function App() {
       <SafeAreaView style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>nemu</Text>
+          <Text style={styles.title}>NEMU</Text>
           <View style={styles.icons}>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <Icon name="plus-square" style={[styles.title, styles.icon]} />
@@ -88,7 +94,7 @@ export default function App() {
         <View style={styles.footer}>
           <Text style={styles.footerText}>
             {hasNfc
-              ? ''
+              ? 'Your device does support NFC.'
               : 'Your device does not support NFC. Many app features will be unavailable'}
           </Text>
         </View>
