@@ -22,8 +22,8 @@ export default function Card(props: CardProps) {
         {/* Text */}
         <View style={styles.cardText}>
           <View style={styles.header}>
-            <Text style={styles.name}>{props.name}</Text>
-            <Text style={styles.date}>{` \u2022 ${props.date}`}</Text>
+            <Text style={styles.nameText}>{props.name}</Text>
+            <Text style={styles.dateText}>{` \u2022 ${props.date}`}</Text>
           </View>
           <Text style={styles.description}>{props.description}</Text>
         </View>
@@ -61,13 +61,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
   },
-  name: {
+  nameText: {
     fontWeight: 'bold',
     fontSize: theme.fontSize.m,
     color: theme.colors.foreground,
+    maxWidth: '80%',
   },
-  date: {
+  dateText: {
     color: theme.colors.medium,
     fontSize: theme.fontSize.s,
   },

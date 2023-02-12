@@ -11,7 +11,7 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import {theme} from '../../theme';
 
-function CustomMenuOption(props: {onSelect?: () => any; children: any}) {
+function CardOption(props: {onSelect?: () => any; children: any}) {
   return (
     <MenuOption
       customStyles={{
@@ -60,15 +60,15 @@ export default function CardOptions(props: {
             marginLeft: theme.spacing.xs,
           },
         }}>
-        <CustomMenuOption onSelect={props.edit}>
+        <CardOption onSelect={props.edit}>
           <Text style={styles.editOption}>Edit</Text>
           <Feather name="edit" style={styles.editOption} />
-        </CustomMenuOption>
+        </CardOption>
         <Divider />
-        <CustomMenuOption onSelect={props.delete}>
+        <CardOption onSelect={props.delete}>
           <Text style={styles.deleteOption}>Delete</Text>
           <Feather name="x-square" style={styles.deleteOption} />
-        </CustomMenuOption>
+        </CardOption>
       </MenuOptions>
     </Menu>
   );
